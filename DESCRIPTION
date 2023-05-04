@@ -2,7 +2,7 @@ Package: portalData
 Type: Package
 Title: Holds and Analyses data fro the Portal Project
 Version: 0.1.0
-Authors@R: person("James J.", "Waterford", email = "ford.water.james@gmail.com", role = c("aut","cre")
+Authors@R: person("James J.", "Waterford", email = "ford.water.james@gmail.com", role = c("aut","cre"))
 Maintainer: James Waterford <ford.water.james@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
