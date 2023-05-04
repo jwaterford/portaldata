@@ -19,8 +19,6 @@ library(readr)
 library(ggplot2)
 ```
 
-<!--![Acacia](https://live.staticflickr.com/7185/6922756579_49638c4951_b.jpg)-->
-
 The Working Directory inside this Rmarkdown *chunk* is listed below:
 ```{r eval = TRUE}
 getwd()
