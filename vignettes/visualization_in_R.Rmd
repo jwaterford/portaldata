@@ -1,8 +1,8 @@
 ---
-title: "intro"
+title: "Visualization in R"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{intro}
+  %\VignetteIndexEntry{Visualiztion in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,11 @@ library(ggplot2)
 What is the purpose of this page?
 ----------------------
 
+
+
 This is a short tutorial on the basics of **extracting**, **evaluating**, and **plotting** in RStudio.
+
+
 
 To do this best, we will be working with a practice dataset from The Ecological Society of America, from a paper entitled **Plant and small-mammal responses to large-herbivore exclusion in an African savanna: five years of the UHURU experiment**.
 
@@ -33,8 +37,6 @@ These *treatments* are different areas of Kenya, where predation levels (and spe
 
 
 We will first call the file, based on the current directory. Then we will use `read.table()` to access the file. 
-
-Using `eval = TRUE` displays the data.
 
 ``` {r Pull & Create tsv, eval  = TRUE}
 getwd()
