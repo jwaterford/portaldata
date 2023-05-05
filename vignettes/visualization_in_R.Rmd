@@ -19,26 +19,34 @@ library(readr)
 library(ggplot2)
 ```
 
-The Working Directory inside this Rmarkdown *chunk* is listed below:
-```{r eval = TRUE}
-getwd()
-```
+What is the purpose of this page?
+----------------------
 
-UHURU studies the effect of herbivores on the plants in Kenya.
+This is a short tutorial on the basics of **extracting**, **evaluating**, and **plotting** in RStudio.
 
-This data set focuses on the effects of different treatments on Acacia trees.
+To do this best, we will be working with a practice dataset from The Ecological Society of America, from a paper entitled **Plant and small-mammal responses to large-herbivore exclusion in an African savanna: five years of the UHURU experiment**.
+
+UHURU studies the effect of herbivores on various plants in Kenya.
+
+This data set in particular focuses on the effects of different *treatments* on Acacia trees.
 These *treatments* are different areas of Kenya, where predation levels (and species) are diversified.
+
 
 We will first call the file, based on the current directory. Then we will use `read.table()` to access the file. 
 
 Using `eval = TRUE` displays the data.
 
 ``` {r Pull & Create tsv, eval  = TRUE}
+getwd()
 ## Provide file using a relative path ##
 acacia_csv <- ("../data-raw/ACACIA_DREPANOLOBIUM_SURVEY.txt")
 ## add `na.strings = "dead"
 acacia <- read.table(acacia_csv, header = TRUE, sep = "\t", fill = TRUE)
 ```
+
+Modifying a data frame
+-------------------
+We've read the file into  a variable in our environment. 
 
 What can we quickly find out from this data set?
 
@@ -49,62 +57,78 @@ There are a handful of commands that can help us out. Some personal favorites ar
  `summary` - does simple mathematical calculations on your data set
  `str` - displays 10 values from each column, with their data type
  `View` - creates a table in another tab
- `class` -
+ `class` - disaplys the data type
  
 ```{r read through, eval = TRUE}
-
-head(acacia)
+#head(acacia)
 str(acacia)
 #summary(acacia)
-
 ```
-After using the `str()` function, we see some small oddities in our data set. *Why is height a character vector?* This can be an issue for some of the mathematical calculations. 
+After using the `str()` function, we see some small oddities in our data set. 
+
+For example, *Why is height a character vector?* This can be an issue for some of the mathematical calculations. 
 
 Let's try and find where the issue lies.
-For Data Frames, we sort by Row, Then Column. By using `df[Row,Column]`
+
+For Data Frames, we sort by Column, Then Row By using `df[Column,Row]`, where `df` refers to the name of your data frame.
+
 If you run `df[,X]`, you will get the full list of values from a Column.
 
 We can also use `$` as to sort through columns.
 
+Since we know that some aspect of `HEIGHT` is leading to this column being a `chr` type, let's look at the full column to see where the issue lies.
 ```{r}
-acacia[8,2] 
-
-head(acacia[8])
 
 acacia$HEIGHT
+acacia[21,8]
 
 ```
-There are values in *HEIGHT* that we cannot keep. This is stopping us from treating HEIGHT as an integer.
-Let's replace those values.
+It appears that the authors of this dataset referred to deceased plants as 'dead'. However, if we want `HEIGHT` as a `num` type, we will need to replace those values.
+
+One function that does this, in the simplest method, is `as.numeric()`.
+
+We will create a new vector that can replace the column in our data frame.
 ``` {r replace}
 col_height <- as.numeric(acacia$HEIGHT)
 acacia$HEIGHT <- col_height
 ```
-By running this command, we have **coerced** the character strings into NA values. This way, we can run mathematical statistics on the daat set.
 
-If we caught this earlier, maybe *before* we imported the data set, we could've forced NAs during import. 
+By running this command, we have *coerced* the character strings into NA values. This way, we can run mathematical statistics on the data set.
+
+If we caught this earlier, maybe before we imported the data set, we could've forced NAs during import. Let's try this now with a feature from  `read.table()`, referred to as `na.strings = `
 ``` {r}
 acacia <- read.table(acacia_csv, header = TRUE, sep = "\t", na.strings = "dead")
 ```
+
+
 Can we make a graph from this data? 
 -----------------------------------
+
+Now that we have a clean dataset, let's try plotting it with `plot()`.
 ```{r graph step 1}
 plot(x=acacia$HEIGHT,y=acacia$AXIS1)
 ```
+
 The `plot` function is useful, but not powerful. Its hard to add titles, and even more difficult to change plot types. How could you ever do a heatmap via plot? You can't. So instead we use `ggplot`.
 
 How do we use ggplot?
 ----------------------
 
-That's a goood question.
+`ggplot2` is the standard R package used for graphing, and it is highly modifiable.
+
+The basic setup for a ggplot is as follows:
+
+`ggplot(data = df, mapping = aes(x = [independent_variable]), y = [dependent_variable] ) + `
+  `geom_[graph_type] + `
+  `...addtl args `
+
+We will use `geom_point()` to create a scatter plot, measuring `HEIGHT` against `AXIS1` (width)
 ```{r graph step 2}
 library(ggplot2)
 ggplot(data=acacia, mapping = aes(x=HEIGHT, y= AXIS1, color = TREATMENT)) +
   geom_point() +
   labs(x="Tree Height", y = "Tree Axis 1")
 ```
-Use `geom_point()` to create a scatter plot.
-
 
 What if we want to reshape our axes? 
 We have functions to `scale()` the data set.
@@ -114,16 +138,16 @@ ggplot(data = acacia, mapping = aes(x = HEIGHT, y = FRUITS, color = ANT)) +
 ## Use facet_wrap 
   facet_wrap(~ANT, scales = "free")
   
-##Add in geom_smooth() for data insight##
+## Add in geom_smooth() for data insigh t##
   
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
-  ##alpha is a modifier of point transparaceny
+  ## alpha is a modifier of point transparaceny
   geom_point(size = 3, alpha = 0.667) + 
   geom_smooth() #method = " +
   ggsave(filename = "jw_acacia_treatment.jpg")
 
 ```
-You must always call `ggplot` to access any of its graphical interface. The differences lie in the interlayed functions.
+You must always call `ggplot` to access any of its graphical interface. The differences lie in the interlaced functions.
 
 ```{r graphs3_4}
 ggplot(data=acacia, mapping = aes(x=TREATMENT)) +
@@ -137,4 +161,4 @@ ggplot(acacia, aes(x=CIRC, color= TREATMENT)) +
   #ggsave("../197-figures/acacia_Circ_by_treatment.jpg")
 ```
 
-
+Add an example of Geom_line here :)

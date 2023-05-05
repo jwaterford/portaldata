@@ -66,7 +66,7 @@
             
       
       
-      <div class="d-none name"><code>intro.Rmd</code></div>
+      <div class="d-none name"><code>visualization_in_R.Rmd</code></div>
     </div>
 
     
@@ -74,23 +74,37 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
-<p>The Working Directory inside this Rmarkdown <em>chunk</em> is listed
-below:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/slimjims/Desktop/master/R-studio/portalData/vignettes"</span></span></code></pre></div>
-<p>UHURU studies the effect of herbivores on the plants in Kenya.</p>
-<p>This data set focuses on the effects of different treatments on
-Acacia trees. These <em>treatments</em> are different areas of Kenya,
-where predation levels (and species) are diversified.</p>
+<div class="section level2">
+<h2 id="what-is-the-purpose-of-this-page">What is the purpose of this page?<a class="anchor" aria-label="anchor" href="#what-is-the-purpose-of-this-page"></a>
+</h2>
+<p>This is a short tutorial on the basics of
+<strong>extracting</strong>, <strong>evaluating</strong>, and
+<strong>plotting</strong> in RStudio.</p>
+<p>To do this best, we will be working with a practice dataset from The
+Ecological Society of America, from a paper entitled <strong>Plant and
+small-mammal responses to large-herbivore exclusion in an African
+savanna: five years of the UHURU experiment</strong>.</p>
+<p>UHURU studies the effect of herbivores on various plants in
+Kenya.</p>
+<p>This data set in particular focuses on the effects of different
+<em>treatments</em> on Acacia trees. These <em>treatments</em> are
+different areas of Kenya, where predation levels (and species) are
+diversified.</p>
 <p>We will first call the file, based on the current directory. Then we
 will use <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table()</a></code> to access the file.</p>
 <p>Using <code>eval = TRUE</code> displays the data.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## Provide file using a relative path ##</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "/Users/slimjims/Desktop/master/R-studio/portalData/vignettes"</span></span>
+<span><span class="co">## Provide file using a relative path ##</span></span>
 <span><span class="va">acacia_csv</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="st">"../data-raw/ACACIA_DREPANOLOBIUM_SURVEY.txt"</span><span class="op">)</span></span>
 <span><span class="co">## add `na.strings = "dead"</span></span>
 <span><span class="va">acacia</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="va">acacia_csv</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="modifying-a-data-frame">Modifying a data frame<a class="anchor" aria-label="anchor" href="#modifying-a-data-frame"></a>
+</h2>
+<p>We’ve read the file into a variable in our environment.</p>
 <p>What can we quickly find out from this data set?</p>
 <p>There are a handful of commands that can help us out. Some personal
 favorites are:</p>
@@ -98,24 +112,9 @@ favorites are:</p>
 <code>summary</code> - does simple mathematical calculations on your
 data set <code>str</code> - displays 10 values from each column, with
 their data type <code>View</code> - creates a table in another tab
-<code>class</code> -</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   SURVEY YEAR  SITE BLOCK TREATMENT    PLOT   ID HEIGHT AXIS1 AXIS2 CIRC</span></span>
-<span><span class="co">#&gt; 1      1 2012 SOUTH     1     TOTAL S1TOTAL  581   2.25  2.75  2.15   20</span></span>
-<span><span class="co">#&gt; 2      1 2012 SOUTH     1     TOTAL S1TOTAL  582   2.65  4.10  3.90   28</span></span>
-<span><span class="co">#&gt; 3      1 2012 SOUTH     1     TOTAL S1TOTAL 3111    1.5  1.70  0.85   17</span></span>
-<span><span class="co">#&gt; 4      1 2012 SOUTH     1     TOTAL S1TOTAL 3112   2.01  1.80  1.60   12</span></span>
-<span><span class="co">#&gt; 5      1 2012 SOUTH     1     TOTAL S1TOTAL 3113   1.75  1.84  1.42   13</span></span>
-<span><span class="co">#&gt; 6      1 2012 SOUTH     1     TOTAL S1TOTAL 3114   1.65  1.62  0.85   15</span></span>
-<span><span class="co">#&gt;   FLOWERS BUDS FRUITS ANT</span></span>
-<span><span class="co">#&gt; 1       0    0     10  CS</span></span>
-<span><span class="co">#&gt; 2       0    0    150  TP</span></span>
-<span><span class="co">#&gt; 3       2    1     50  TP</span></span>
-<span><span class="co">#&gt; 4       0    0     75  CS</span></span>
-<span><span class="co">#&gt; 5       0    0     20  CS</span></span>
-<span><span class="co">#&gt; 6       0    0      0   E</span></span>
+<code>class</code> - disaplys the data type</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#head(acacia)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    157 obs. of  15 variables:</span></span>
 <span><span class="co">#&gt;  $ SURVEY   : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
@@ -135,26 +134,21 @@ their data type <code>View</code> - creates a table in another tab
 <span><span class="co">#&gt;  $ ANT      : chr  "CS" "TP" "TP" "CS" ...</span></span>
 <span><span class="co">#summary(acacia)</span></span></code></pre></div>
 <p>After using the <code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code> function, we see some small
-oddities in our data set. <em>Why is height a character vector?</em>
-This can be an issue for some of the mathematical calculations.</p>
-<p>Let’s try and find where the issue lies. For Data Frames, we sort by
-Row, Then Column. By using <code>df[Row,Column]</code> If you run
-<code>df[,X]</code>, you will get the full list of values from a
-Column.</p>
+oddities in our data set.</p>
+<p>For example, <em>Why is height a character vector?</em> This can be
+an issue for some of the mathematical calculations.</p>
+<p>Let’s try and find where the issue lies.</p>
+<p>For Data Frames, we sort by Column, Then Row By using
+<code>df[Column,Row]</code>, where <code>df</code> refers to the name of
+your data frame.</p>
+<p>If you run <code>df[,X]</code>, you will get the full list of values
+from a Column.</p>
 <p>We can also use <code>$</code> as to sort through columns.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">acacia</span><span class="op">[</span><span class="fl">8</span>,<span class="fl">2</span><span class="op">]</span> </span>
-<span><span class="co">#&gt; [1] 2012</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   HEIGHT</span></span>
-<span><span class="co">#&gt; 1   2.25</span></span>
-<span><span class="co">#&gt; 2   2.65</span></span>
-<span><span class="co">#&gt; 3    1.5</span></span>
-<span><span class="co">#&gt; 4   2.01</span></span>
-<span><span class="co">#&gt; 5   1.75</span></span>
-<span><span class="co">#&gt; 6   1.65</span></span>
-<span></span>
+<p>Since we know that some aspect of <code>HEIGHT</code> is leading to
+this column being a <code>chr</code> type, let’s look at the full column
+to see where the issue lies.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">acacia</span><span class="op">$</span><span class="va">HEIGHT</span></span>
 <span><span class="co">#&gt;   [1] "2.25" "2.65" "1.5"  "2.01" "1.75" "1.65" "1.2"  "1.45" "1.87" "2.38"</span></span>
 <span><span class="co">#&gt;  [11] "2.58" "2.65" "2.35" "1.88" "2.32" "2.39" "2.2"  "1.05" "2"    "1.28"</span></span>
@@ -171,87 +165,104 @@ Column.</p>
 <span><span class="co">#&gt; [121] "1.75" "1.64" "1.42" "dead" "0.9"  "dead" "1.8"  "2.47" "2.15" "1.7" </span></span>
 <span><span class="co">#&gt; [131] "1.9"  "1.95" "1.8"  "1.4"  "1"    "1.75" "1.28" "1"    "1.45" "1"   </span></span>
 <span><span class="co">#&gt; [141] "1.03" "1.51" "1.17" "1.33" "1.3"  "1.13" "1.58" "1.06" "1.05" "1.45"</span></span>
-<span><span class="co">#&gt; [151] "1.15" "1.42" "1.02" "1.4"  "1.45" "1.95" "dead"</span></span></code></pre></div>
-<p>There are values in <em>HEIGHT</em> that we cannot keep. This is
-stopping us from treating HEIGHT as an integer. Let’s replace those
-values.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; [151] "1.15" "1.42" "1.02" "1.4"  "1.45" "1.95" "dead"</span></span>
+<span><span class="va">acacia</span><span class="op">[</span><span class="fl">21</span>,<span class="fl">8</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "dead"</span></span></code></pre></div>
+<p>It appears that the authors of this dataset referred to deceased
+plants as ‘dead’. However, if we want <code>HEIGHT</code> as a
+<code>num</code> type, we will need to replace those values.</p>
+<p>One function that does this, in the simplest method, is
+<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code>.</p>
+<p>We will create a new vector that can replace the column in our data
+frame.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">col_height</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">HEIGHT</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: NAs introduced by coercion</span></span>
 <span><span class="va">acacia</span><span class="op">$</span><span class="va">HEIGHT</span> <span class="op">&lt;-</span> <span class="va">col_height</span></span></code></pre></div>
-<p>By running this command, we have <strong>coerced</strong> the
-character strings into NA values. This way, we can run mathematical
-statistics on the daat set.</p>
-<p>If we caught this earlier, maybe <em>before</em> we imported the data
-set, we could’ve forced NAs during import.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>By running this command, we have <em>coerced</em> the character
+strings into NA values. This way, we can run mathematical statistics on
+the data set.</p>
+<p>If we caught this earlier, maybe before we imported the data set, we
+could’ve forced NAs during import. Let’s try this now with a feature
+from <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table()</a></code>, referred to as
+<code>na.strings =</code></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">acacia</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="va">acacia_csv</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span>, na.strings <span class="op">=</span> <span class="st">"dead"</span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="can-we-make-a-graph-from-this-data">Can we make a graph from this data?<a class="anchor" aria-label="anchor" href="#can-we-make-a-graph-from-this-data"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>Now that we have a clean dataset, let’s try plotting it with
+<code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">acacia</span><span class="op">$</span><span class="va">HEIGHT</span>,y<span class="op">=</span><span class="va">acacia</span><span class="op">$</span><span class="va">AXIS1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="intro_files/figure-html/graph%20step%201-1.png" width="700">
-The <code>plot</code> function is useful, but not powerful. Its hard to
-add titles, and even more difficult to change plot types. How could you
-ever do a heatmap via plot? You can’t. So instead we use
+<p><img src="visualization_in_R_files/figure-html/graph%20step%201-1.png" width="700"></p>
+<p>The <code>plot</code> function is useful, but not powerful. Its hard
+to add titles, and even more difficult to change plot types. How could
+you ever do a heatmap via plot? You can’t. So instead we use
 <code>ggplot</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="how-do-we-use-ggplot">How do we use ggplot?<a class="anchor" aria-label="anchor" href="#how-do-we-use-ggplot"></a>
 </h2>
-<p>That’s a goood question.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p><code>ggplot2</code> is the standard R package used for graphing, and
+it is highly modifiable.</p>
+<p>The basic setup for a ggplot is as follows:</p>
+<p><code>ggplot(data = df, mapping = aes(x = [independent_variable]), y = [dependent_variable] ) +</code>
+<code>geom_[graph_type] +</code> <code>...addtl args</code></p>
+<p>We will use <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point()</a></code> to create a scatter plot,
+measuring <code>HEIGHT</code> against <code>AXIS1</code> (width)</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">acacia</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">HEIGHT</span>, y<span class="op">=</span> <span class="va">AXIS1</span>, color <span class="op">=</span> <span class="va">TREATMENT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Tree Height"</span>, y <span class="op">=</span> <span class="st">"Tree Axis 1"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 4 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
-<p><img src="intro_files/figure-html/graph%20step%202-1.png" width="700">
-Use <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point()</a></code> to create a scatter plot.</p>
+<p><img src="visualization_in_R_files/figure-html/graph%20step%202-1.png" width="700"></p>
 <p>What if we want to reshape our axes? We have functions to
 <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale()</a></code> the data set.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">acacia</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">HEIGHT</span>, y <span class="op">=</span> <span class="va">FRUITS</span>, color <span class="op">=</span> <span class="va">ANT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, alpha<span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span><span class="co">## Use facet_wrap </span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">ANT</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 4 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
-<p><img src="intro_files/figure-html/graph%20step%203-1.png" width="700"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p><img src="visualization_in_R_files/figure-html/graph%20step%203-1.png" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  </span>
-<span><span class="co">##Add in geom_smooth() for data insight##</span></span>
+<span><span class="co">## Add in geom_smooth() for data insigh t##</span></span>
 <span>  </span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">acacia</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">CIRC</span>, y <span class="op">=</span> <span class="va">HEIGHT</span>, color <span class="op">=</span> <span class="va">TREATMENT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co">##alpha is a modifier of point transparaceny</span></span>
+<span>  <span class="co">## alpha is a modifier of point transparaceny</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, alpha <span class="op">=</span> <span class="fl">0.667</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#method = " +</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span>
 <span><span class="co">#&gt; Warning: Removed 4 rows containing non-finite values (`stat_smooth()`).</span></span>
 <span><span class="co">#&gt; Removed 4 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
-<p><img src="intro_files/figure-html/graph%20step%203-2.png" width="700"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p><img src="visualization_in_R_files/figure-html/graph%20step%203-2.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"jw_acacia_treatment.jpg"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Saving 7.29 x 4.51 in image</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span>
 <span><span class="co">#&gt; Warning: Removed 4 rows containing non-finite values (`stat_smooth()`).</span></span>
 <span><span class="co">#&gt; Removed 4 rows containing missing values (`geom_point()`).</span></span></code></pre></div>
 <p>You must always call <code>ggplot</code> to access any of its
-graphical interface. The differences lie in the interlayed
+graphical interface. The differences lie in the interlaced
 functions.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">acacia</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">TREATMENT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="intro_files/figure-html/graphs3_4-1.png" width="700"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<p><img src="visualization_in_R_files/figure-html/graphs3_4-1.png" width="700"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">CIRC</span>, color<span class="op">=</span> <span class="va">TREATMENT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co">## `bins = ` defines how many boxes are displayed </span></span>
 <span>  <span class="co">## `Fill = ` is for color </span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, fill <span class="op">=</span> <span class="st">"slategray3"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 4 rows containing non-finite values (`stat_bin()`).</span></span></code></pre></div>
-<p><img src="intro_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p><img src="visualization_in_R_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#ggsave("../197-figures/acacia_Circ_by_treatment.jpg")</span></span></code></pre></div>
+<p>Add an example of Geom_line here :)</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
