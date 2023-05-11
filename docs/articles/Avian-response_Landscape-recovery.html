@@ -184,8 +184,6 @@ species.</p>
 <!-- Describe why we are using Opentree -->
 <p>The author had included a supplementary data table with their
 original <a href="https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659" class="external-link">article</a>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.amazon.com/Integration-Manipulation-Visualization-Phylogenetic-Computational-ebook/dp/B0B5NLZR1Z/" class="external-link">ggtree</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;">ggtree v3.6.2 For help: https://yulab-smu.top/treedata-book/</span></span></span>
 <span><span class="co"><span style="color: #949494;">## </span></span></span>
 <span><span class="co"><span style="color: #949494;">## If you use the ggtree package suite in published research, please cite</span></span></span>
@@ -199,17 +197,15 @@ original <a href="https://rs.figshare.com/articles/journal_contribution/ALL_FILE
 <span><span class="co"><span style="color: #949494;">## G Yu. Data Integration, Manipulation and Visualization of Phylogenetic</span></span></span>
 <span><span class="co"><span style="color: #949494;">## Trees (1st ed.). Chapman and Hall/CRC. 2022. ISBN: 9781032233574</span></span></span>
 <span><span class="co"><span style="color: #949494;">## </span></span></span>
-<span><span class="co"><span style="color: #949494;">## Shuangbin Xu, Lin Li, Xiao Luo, Meijun Chen, Wenli Tang, Li Zhan, Zehan</span></span></span>
-<span><span class="co"><span style="color: #949494;">## Dai, Tommy T. Lam, Yi Guan, Guangchuang Yu. Ggtree: A serialized data</span></span></span>
-<span><span class="co"><span style="color: #949494;">## object for visualization of a phylogenetic tree and annotation data.</span></span></span>
-<span><span class="co"><span style="color: #949494;">## iMeta 2022, 4(1):e56. doi:10.1002/imt2.56 </span></span></span></code></pre>
+<span><span class="co"><span style="color: #949494;">## S Xu, Z Dai, P Guo, X Fu, S Liu, L Zhou, W Tang, T Feng, M Chen, L</span></span></span>
+<span><span class="co"><span style="color: #949494;">## Zhan, T Wu, E Hu, Y Jiang, X Bo, G Yu. ggtreeExtra: Compact</span></span></span>
+<span><span class="co"><span style="color: #949494;">## visualization of richly annotated phylogenetic data. Molecular Biology</span></span></span>
+<span><span class="co"><span style="color: #949494;">## and Evolution. 2021, 38(9):4039-4042. doi: 10.1093/molbev/msab166 </span></span></span></code></pre>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Attaching package: 'ggtree'</span></span></code></pre>
 <pre><code><span><span class="co">## The following objects are masked from 'package:ggmap':</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     inset, theme_inset</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ape-package.ird.fr/" class="external-link">ape</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Attaching package: 'ape'</span></span></code></pre>
 <pre><code><span><span class="co">## The following object is masked from 'package:ggtree':</span></span>
@@ -218,17 +214,15 @@ original <a href="https://rs.figshare.com/articles/journal_contribution/ALL_FILE
 <pre><code><span><span class="co">## The following object is masked from 'package:dplyr':</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     where</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/rotl/" class="external-link">rotl</a></span><span class="op">)</span></span></code></pre></div>
 <p>Let’s reduce species by the number found across the given sites.</p>
 <p>I will generate a plot that represents the most abundant species of
 birds across these sites.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">small_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Count"</span></span>
 <span><span class="va">small_table</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">species</span><span class="op">$</span><span class="va">Species</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">121</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">small_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">small_table</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Count</span> <span class="op">&gt;=</span> <span class="fl">150</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">smaller_table</span></span>
 <span></span>
 <span></span>
@@ -237,9 +231,9 @@ birds across these sites.</p>
 <span><span class="fu">left_join</span><span class="op">(</span><span class="va">smaller_table</span>,<span class="va">species</span>, by <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">bird_list</span></span>
 <span></span>
 <span></span>
-<span><span class="va">bird_taxa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/rotl/reference/tnrs_match_names.html" class="external-link">tnrs_match_names</a></span><span class="op">(</span><span class="va">bird_list</span><span class="op">$</span><span class="va">Scientific.name</span><span class="op">)</span></span>
+<span><span class="va">bird_taxa</span> <span class="op">&lt;-</span> <span class="fu">tnrs_match_names</span><span class="op">(</span><span class="va">bird_list</span><span class="op">$</span><span class="va">Scientific.name</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">bird_taxa</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">bird_taxa</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flags</span> <span class="op">==</span> <span class="st">"sibling_higher"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">newlist</span></span>
 <span><span class="va">newlist</span></span></code></pre></div>
 <pre><code><span><span class="co">##       search_string       unique_name approximate_match ott_id is_synonym</span></span>
@@ -248,8 +242,8 @@ birds across these sites.</p>
 <span><span class="co">##            flags number_matches</span></span>
 <span><span class="co">## 1 sibling_higher              1</span></span>
 <span><span class="co">## 2 sibling_higher              1</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bird_tr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/rotl/reference/tol_induced_subtree.html" class="external-link">tol_induced_subtree</a></span><span class="op">(</span>ott_ids <span class="op">=</span> <span class="va">bird_taxa</span><span class="op">$</span><span class="va">ott_id</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bird_tr</span> <span class="op">&lt;-</span> <span class="fu">tol_induced_subtree</span><span class="op">(</span>ott_ids <span class="op">=</span> <span class="va">bird_taxa</span><span class="op">$</span><span class="va">ott_id</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 Progress [---------------------------------] 0/213 (  0) ?s
 Progress [==============================] 213/213 (100)  0s
@@ -326,7 +320,7 @@ Progress [==============================] 213/213 (100)  0s
 <span><span class="co">## mrcaott17146ott28962, mrcaott17146ott17148, mrcaott28965ott380071,</span></span>
 <span><span class="co">## mrcaott28965ott147369, mrcaott147369ott392967, mrcaott392967ott550853, Ocyphaps</span></span>
 <span><span class="co">## ott981605</span></span></code></pre>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bird_tr</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Avian-response_Landscape-recovery_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>

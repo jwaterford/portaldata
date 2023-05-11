@@ -19,9 +19,10 @@ This data set also includes the ecological traits of these birds, and the attrib
 Background
 ---
 
-After searching DRYAD for an explanation of the dataset, I found a supplementary material on the published article in the Journal of *Royal Society Publishing*.
 
-<!-- Add this link in the https://royalsocietypublishing.org/doi/suppl/10.1098/rspb.2019.0114 -->
+
+After searching DRYAD for an explanation of the dataset, I found a supplementary material on the published article in the [Journal of Royal Society Publishing](https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659).
+
 
 ```{r setup, echo=FALSE, message=FALSE}
 library(dplyr)
@@ -121,30 +122,32 @@ ggplot(data=BirdSite_Data, mapping = aes(x = ln_cover, y = site.rich, color = gr
   ylab(label = "Total count per visit")
 ```
 
+As we can see from the dot plots, there is a greater concentration of species on sites where significant regrowth has occurred. 
 
-
-
+<!-- Come back and edit your first Dotplot -->
 
 Taxonomic Analysis & OpenTree Taxonomy
 -------------------
 
+Looking at the interconnectivity of the species present across these NSW will help us better understand the ecological variety.
+
 <!-- Describe why we are using Opentree -->
 
+**OpenTree** is a taxonomic package that will allow us to to sort species by scientific name into a combined taxon tree.
 
 The author had included a supplementary data table with their original [article](https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659).
 
+With this dataset,
 
-```{r OpenTree_load}
+```{r OpenTree_load, echo=FALSE, warning=FALSE}
 library(ggtree)
 library(ape)
 library(rotl)
 ```
 
-Let's reduce species by the number found across the given sites.
+I am reducing the number of species in this table to just the genuses with counts greater than 150.
 
-I will generate a plot that represents the most abundant species of birds across these sites.
-
-```{r}
+```{r, warning=FALSE}
 small_table <- data.frame((small_table))
 
 colnames(small_table)[1] <- "Count"
@@ -152,24 +155,12 @@ small_table$Species <- c(species$Species[1:121])
 small_table %>% 
   filter(Count >= 150) -> smaller_table
 
-
-## Colnames[0] does not exist. There is no column to read by if I cannot grab this column. Revisit your named integer data frame. 
-
 left_join(smaller_table,species, by = "Species") -> bird_list
-
 
 bird_taxa <- tnrs_match_names(bird_list$Scientific.name)
 
-bird_taxa %>% 
-  filter(flags == "sibling_higher") -> newlist
-newlist
-
-
 bird_tr <- tol_induced_subtree(ott_ids = bird_taxa$ott_id)
-
 plot(bird_tr)
-
-
 ```
 
 
