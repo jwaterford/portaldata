@@ -91,9 +91,8 @@ of the restored sites.</p>
 <h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
 <p>After searching DRYAD for an explanation of the dataset, I found a
-supplementary material on the published article in the Journal of
-<em>Royal Society Publishing</em>.</p>
-<!-- Add this link in the https://royalsocietypublishing.org/doi/suppl/10.1098/rspb.2019.0114 -->
+supplementary material on the published article in the <a href="https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659" class="external-link">Journal
+of Royal Society Publishing</a>.</p>
 <p>These first two data files were imported directly from DRYAD.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BirdData_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="st">"../data-raw/Ikin_2019_BirdData.txt"</span><span class="op">)</span></span>
@@ -177,47 +176,24 @@ species.</p>
 <span>  <span class="fu">ylab</span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Total count per visit"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre>
 <p><img src="Avian-response_Landscape-recovery_files/figure-html/ggplot2-2.png" width="700"></p>
+<p>As we can see from the dot plots, there is a greater concentration of
+species on sites where significant regrowth has occurred.</p>
+<!-- Come back and edit your first Dotplot -->
 </div>
 <div class="section level2">
 <h2 id="taxonomic-analysis-opentree-taxonomy">Taxonomic Analysis &amp; OpenTree Taxonomy<a class="anchor" aria-label="anchor" href="#taxonomic-analysis-opentree-taxonomy"></a>
 </h2>
+<p>Looking at the interconnectivity of the species present across these
+NSW will help us better understand the ecological variety.</p>
 <!-- Describe why we are using Opentree -->
+<p><strong>OpenTree</strong> is a taxonomic package that will allow us
+to to sort species by scientific name into a combined taxon tree.</p>
 <p>The author had included a supplementary data table with their
 original <a href="https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659" class="external-link">article</a>.</p>
-<pre><code><span><span class="co">## <span style="color: #949494;">ggtree v3.6.2 For help: https://yulab-smu.top/treedata-book/</span></span></span>
-<span><span class="co"><span style="color: #949494;">## </span></span></span>
-<span><span class="co"><span style="color: #949494;">## If you use the ggtree package suite in published research, please cite</span></span></span>
-<span><span class="co"><span style="color: #949494;">## the appropriate paper(s):</span></span></span>
-<span><span class="co"><span style="color: #949494;">## </span></span></span>
-<span><span class="co"><span style="color: #949494;">## Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam.</span></span></span>
-<span><span class="co"><span style="color: #949494;">## ggtree: an R package for visualization and annotation of phylogenetic</span></span></span>
-<span><span class="co"><span style="color: #949494;">## trees with their covariates and other associated data. Methods in</span></span></span>
-<span><span class="co"><span style="color: #949494;">## Ecology and Evolution. 2017, 8(1):28-36. doi:10.1111/2041-210X.12628</span></span></span>
-<span><span class="co"><span style="color: #949494;">## </span></span></span>
-<span><span class="co"><span style="color: #949494;">## G Yu. Data Integration, Manipulation and Visualization of Phylogenetic</span></span></span>
-<span><span class="co"><span style="color: #949494;">## Trees (1st ed.). Chapman and Hall/CRC. 2022. ISBN: 9781032233574</span></span></span>
-<span><span class="co"><span style="color: #949494;">## </span></span></span>
-<span><span class="co"><span style="color: #949494;">## S Xu, Z Dai, P Guo, X Fu, S Liu, L Zhou, W Tang, T Feng, M Chen, L</span></span></span>
-<span><span class="co"><span style="color: #949494;">## Zhan, T Wu, E Hu, Y Jiang, X Bo, G Yu. ggtreeExtra: Compact</span></span></span>
-<span><span class="co"><span style="color: #949494;">## visualization of richly annotated phylogenetic data. Molecular Biology</span></span></span>
-<span><span class="co"><span style="color: #949494;">## and Evolution. 2021, 38(9):4039-4042. doi: 10.1093/molbev/msab166 </span></span></span></code></pre>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'ggtree'</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:ggmap':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     inset, theme_inset</span></span></code></pre>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'ape'</span></span></code></pre>
-<pre><code><span><span class="co">## The following object is masked from 'package:ggtree':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     rotate</span></span></code></pre>
-<pre><code><span><span class="co">## The following object is masked from 'package:dplyr':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     where</span></span></code></pre>
-<p>Let’s reduce species by the number found across the given sites.</p>
-<p>I will generate a plot that represents the most abundant species of
-birds across these sites.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>With this dataset,</p>
+<p>I am reducing the number of species in this table to just the genuses
+with counts greater than 150.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">small_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Count"</span></span>
@@ -225,102 +201,16 @@ birds across these sites.</p>
 <span><span class="va">small_table</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Count</span> <span class="op">&gt;=</span> <span class="fl">150</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">smaller_table</span></span>
 <span></span>
-<span></span>
-<span><span class="co">## Colnames[0] does not exist. There is no column to read by if I cannot grab this column. Revisit your named integer data frame. </span></span>
-<span></span>
 <span><span class="fu">left_join</span><span class="op">(</span><span class="va">smaller_table</span>,<span class="va">species</span>, by <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">bird_list</span></span>
-<span></span>
 <span></span>
 <span><span class="va">bird_taxa</span> <span class="op">&lt;-</span> <span class="fu">tnrs_match_names</span><span class="op">(</span><span class="va">bird_list</span><span class="op">$</span><span class="va">Scientific.name</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">bird_taxa</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flags</span> <span class="op">==</span> <span class="st">"sibling_higher"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">newlist</span></span>
-<span><span class="va">newlist</span></span></code></pre></div>
-<pre><code><span><span class="co">##       search_string       unique_name approximate_match ott_id is_synonym</span></span>
-<span><span class="co">## 1 corvus coronoides Corvus coronoides             FALSE 808257      FALSE</span></span>
-<span><span class="co">## 2  sturnus vulgaris  Sturnus vulgaris             FALSE 565813      FALSE</span></span>
-<span><span class="co">##            flags number_matches</span></span>
-<span><span class="co">## 1 sibling_higher              1</span></span>
-<span><span class="co">## 2 sibling_higher              1</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bird_tr</span> <span class="op">&lt;-</span> <span class="fu">tol_induced_subtree</span><span class="op">(</span>ott_ids <span class="op">=</span> <span class="va">bird_taxa</span><span class="op">$</span><span class="va">ott_id</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">bird_tr</span> <span class="op">&lt;-</span> <span class="fu">tol_induced_subtree</span><span class="op">(</span>ott_ids <span class="op">=</span> <span class="va">bird_taxa</span><span class="op">$</span><span class="va">ott_id</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 Progress [---------------------------------] 0/213 (  0) ?s
 Progress [==============================] 213/213 (100)  0s
                                                             </code></pre>
-<pre><code><span><span class="co">## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with</span></span>
-<span><span class="co">## labels: mrcaott246ott7145, mrcaott246ott5272, mrcaott246ott928360,</span></span>
-<span><span class="co">## mrcaott246ott1858, mrcaott246ott3600042, mrcaott246ott47588, Passeriformes</span></span>
-<span><span class="co">## ott1041547, mrcaott246ott3212, mrcaott246ott428578, mrcaott246ott32658,</span></span>
-<span><span class="co">## mrcaott246ott22325, mrcaott246ott176461, mrcaott246ott10351, mrcaott246ott3364,</span></span>
-<span><span class="co">## mrcaott246ott5934, mrcaott246ott1566, mrcaott1566ott3598440,</span></span>
-<span><span class="co">## mrcaott1566ott496009, mrcaott1566ott2175, mrcaott2175ott968664,</span></span>
-<span><span class="co">## mrcaott2175ott259082, mrcaott2175ott59905, mrcaott2175ott2224,</span></span>
-<span><span class="co">## mrcaott2224ott366470, mrcaott366470ott565813, mrcaott1488ott72472,</span></span>
-<span><span class="co">## mrcaott1488ott2375, mrcaott1488ott63797, mrcaott1488ott284404,</span></span>
-<span><span class="co">## mrcaott1488ott110316, mrcaott1488ott17016, mrcaott1488ott107463,</span></span>
-<span><span class="co">## mrcaott107463ott353520, mrcaott107463ott177058, mrcaott107463ott107476,</span></span>
-<span><span class="co">## mrcaott107476ott337752, mrcaott337752ott374222, mrcaott374222ott865537,</span></span>
-<span><span class="co">## mrcaott4820ott409116, mrcaott4820ott20989, mrcaott4820ott58860,</span></span>
-<span><span class="co">## mrcaott4820ott11462, mrcaott4820ott140440, mrcaott4820ott197505,</span></span>
-<span><span class="co">## mrcaott4820ott75978, mrcaott4820ott11315, mrcaott4820ott5933,</span></span>
-<span><span class="co">## mrcaott5933ott60456, mrcaott5933ott60465, Corvus ott952596,</span></span>
-<span><span class="co">## mrcaott5933ott25637, mrcaott25637ott199843, mrcaott25637ott473431,</span></span>
-<span><span class="co">## mrcaott25637ott686166, mrcaott25637ott111993, mrcaott25637ott183621,</span></span>
-<span><span class="co">## mrcaott25637ott249747, mrcaott25637ott48946, mrcaott48946ott197189,</span></span>
-<span><span class="co">## mrcaott48946ott872547, mrcaott48946ott269185, mrcaott269185ott5560983,</span></span>
-<span><span class="co">## mrcaott269185ott289433, mrcaott289433ott289472, mrcaott289472ott318519,</span></span>
-<span><span class="co">## Monarchidae ott817406, mrcaott23803ott754846, Grallina ott489918,</span></span>
-<span><span class="co">## mrcaott23690ott242575, mrcaott23690ott749725, mrcaott23690ott520286,</span></span>
-<span><span class="co">## Corcoracidae ott1092341, Corcorax ott659774, mrcaott20998ott31161,</span></span>
-<span><span class="co">## mrcaott31161ott226273, mrcaott31161ott72045, mrcaott31161ott71163,</span></span>
-<span><span class="co">## mrcaott31161ott72035, mrcaott31161ott276716, Gymnorhina ott613403, Artamus</span></span>
-<span><span class="co">## (genus in Deuterostomia) ott1054558, mrcaott563268ott563269,</span></span>
-<span><span class="co">## mrcaott75981ott80432, mrcaott80432ott174107, mrcaott174107ott877146,</span></span>
-<span><span class="co">## mrcaott174107ott258829, mrcaott174107ott309058, mrcaott174107ott352337,</span></span>
-<span><span class="co">## mrcaott352337ott634888, mrcaott352337ott842491, mrcaott352337ott408047,</span></span>
-<span><span class="co">## mrcaott408047ott632503, mrcaott258828ott258831, mrcaott258831ott258832,</span></span>
-<span><span class="co">## mrcaott258832ott258837, mrcaott258832ott258834, mrcaott258832ott366204,</span></span>
-<span><span class="co">## mrcaott258832ott258833, mrcaott258832ott877153, mrcaott258832ott366180,</span></span>
-<span><span class="co">## mrcaott366180ott884904, mrcaott17162ott89234, mrcaott89237ott89244,</span></span>
-<span><span class="co">## mrcaott89237ott675870, mrcaott675870ott7068331, mrcaott675870ott715129,</span></span>
-<span><span class="co">## mrcaott675870ott7068326, mrcaott89243ott663338, mrcaott89243ott101677,</span></span>
-<span><span class="co">## mrcaott89243ott95987, mrcaott95987ott849630, mrcaott95987ott95994,</span></span>
-<span><span class="co">## mrcaott95987ott140655, mrcaott140655ott4947730, mrcaott140655ott143158,</span></span>
-<span><span class="co">## mrcaott143158ott675868, mrcaott143158ott5561007, mrcaott143158ott534614,</span></span>
-<span><span class="co">## mrcaott143158ott4947734, mrcaott143158ott665637, mrcaott143158ott346147,</span></span>
-<span><span class="co">## mrcaott346147ott665636, mrcaott5929ott196938, mrcaott5929ott109304,</span></span>
-<span><span class="co">## mrcaott5929ott6258, mrcaott5929ott6262, mrcaott6262ott45233,</span></span>
-<span><span class="co">## mrcaott45233ott58052, mrcaott45233ott58048, mrcaott58048ott140612,</span></span>
-<span><span class="co">## mrcaott140612ott504461, mrcaott58049ott927348, mrcaott58049ott58050, Manorina</span></span>
-<span><span class="co">## ott465914, mrcaott58049ott465906, mrcaott376597ott701813,</span></span>
-<span><span class="co">## mrcaott376597ott927350, Anthochaera ott109305, mrcaott376597ott527595,</span></span>
-<span><span class="co">## mrcaott527595ott527605, mrcaott32480ott255826, mrcaott32480ott45221,</span></span>
-<span><span class="co">## mrcaott32480ott201676, Acanthiza ott808271, mrcaott32480ott161777,</span></span>
-<span><span class="co">## mrcaott32480ott808269, Gerygone ott918680, mrcaott32484ott32490,</span></span>
-<span><span class="co">## mrcaott32484ott315041, Pardalotidae ott1093579, Pardalotus ott598356,</span></span>
-<span><span class="co">## mrcaott757323ott1066393, Maluridae ott901832, mrcaott35023ott287283,</span></span>
-<span><span class="co">## mrcaott35023ott650063, Malurus ott901831, mrcaott35023ott804479,</span></span>
-<span><span class="co">## mrcaott35023ott168420, mrcaott168420ott436423, mrcaott436423ott563582,</span></span>
-<span><span class="co">## mrcaott44866ott308793, Climacteridae ott73972, mrcaott308793ott884906,</span></span>
-<span><span class="co">## Climacteris ott531218, mrcaott308793ott531212, Psittaciformes ott1020133,</span></span>
-<span><span class="co">## mrcaott7113ott33330, mrcaott7113ott7116, mrcaott7113ott225201,</span></span>
-<span><span class="co">## mrcaott7113ott7124, mrcaott7124ott7125, mrcaott7125ott58949,</span></span>
-<span><span class="co">## mrcaott7125ott233194, mrcaott7125ott14155, mrcaott7125ott961466, Platycercus</span></span>
-<span><span class="co">## ott512910, mrcaott19460ott893569, mrcaott19460ott209187, Psephotus ott246411,</span></span>
-<span><span class="co">## Cacatuidae ott512919, mrcaott58938ott119421, mrcaott58938ott7068761,</span></span>
-<span><span class="co">## mrcaott58938ott900913, Eolophus ott900916, mrcaott2907ott6895,</span></span>
-<span><span class="co">## mrcaott6895ott36453, mrcaott6895ott897867, mrcaott6895ott95396,</span></span>
-<span><span class="co">## mrcaott6895ott12995, mrcaott12995ott26078, mrcaott26078ott150514,</span></span>
-<span><span class="co">## mrcaott26078ott284298, mrcaott26078ott88365, mrcaott26078ott26085,</span></span>
-<span><span class="co">## mrcaott26085ott26092, mrcaott26092ott26094, mrcaott234476ott234478,</span></span>
-<span><span class="co">## mrcaott234476ott234479, mrcaott234479ott704458, mrcaott234479ott757734,</span></span>
-<span><span class="co">## mrcaott234479ott757735, Dacelo ott938421, mrcaott5021ott17146,</span></span>
-<span><span class="co">## mrcaott17146ott57819, Columbiformes ott363030, mrcaott17146ott45505,</span></span>
-<span><span class="co">## mrcaott17146ott28962, mrcaott17146ott17148, mrcaott28965ott380071,</span></span>
-<span><span class="co">## mrcaott28965ott147369, mrcaott147369ott392967, mrcaott392967ott550853, Ocyphaps</span></span>
-<span><span class="co">## ott981605</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bird_tr</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Avian-response_Landscape-recovery_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>

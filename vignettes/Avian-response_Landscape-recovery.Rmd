@@ -19,8 +19,6 @@ This data set also includes the ecological traits of these birds, and the attrib
 Background
 ---
 
-
-
 After searching DRYAD for an explanation of the dataset, I found a supplementary material on the published article in the [Journal of Royal Society Publishing](https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659).
 
 
@@ -139,7 +137,7 @@ The author had included a supplementary data table with their original [article]
 
 With this dataset,
 
-```{r OpenTree_load, echo=FALSE, warning=FALSE}
+```{r OpenTree_load, echo=FALSE, warning=FALSE, message=FALSE}
 library(ggtree)
 library(ape)
 library(rotl)
