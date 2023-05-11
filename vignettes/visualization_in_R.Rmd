@@ -49,16 +49,18 @@ acacia <- read.table(acacia_csv, header = TRUE, sep = "\t", fill = TRUE)
 Modifying a data frame
 -------------------
 We've read the file into  a variable in our environment. 
-
 What can we quickly find out from this data set?
-
 There are a handful of commands that can help us out. Some personal favorites are:
 
 
  `head` - read the first 10 lines from the first 10 columns
+ 
  `summary` - does simple mathematical calculations on your data set
+ 
  `str` - displays 10 values from each column, with their data type
+ 
  `View` - creates a table in another tab
+ 
  `class` - disaplys the data type
  
 ```{r read through, eval = TRUE}
@@ -72,11 +74,11 @@ For example, *Why is height a character vector?* This can be an issue for some o
 
 Let's try and find where the issue lies.
 
-For Data Frames, we sort by Column, Then Row By using `df[Column,Row]`, where `df` refers to the name of your data frame.
+For Data Frames, we sort by `Column`, then `Row` By using `df[Column,Row]`, where `df` refers to the name of your data frame.
 
 If you run `df[,X]`, you will get the full list of values from a Column.
 
-We can also use `$` as to sort through columns.
+We can also use `$` as a `string index` to sort through columns.
 
 Since we know that some aspect of `HEIGHT` is leading to this column being a `chr` type, let's look at the full column to see where the issue lies.
 ```{r}

@@ -41,6 +41,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/Avian-response_Landscape-recovery.html">Avian Response to Recovering Landscapes</a>
     <a class="dropdown-item" href="../articles/visualization_in_R.html">Visualization in R</a>
   </div>
 </li>
@@ -102,15 +103,17 @@ will use <code><a href="https://rdrr.io/r/utils/read.table.html" class="external
 <div class="section level2">
 <h2 id="modifying-a-data-frame">Modifying a data frame<a class="anchor" aria-label="anchor" href="#modifying-a-data-frame"></a>
 </h2>
-<p>We’ve read the file into a variable in our environment.</p>
-<p>What can we quickly find out from this data set?</p>
-<p>There are a handful of commands that can help us out. Some personal
-favorites are:</p>
-<p><code>head</code> - read the first 10 lines from the first 10 columns
-<code>summary</code> - does simple mathematical calculations on your
-data set <code>str</code> - displays 10 values from each column, with
-their data type <code>View</code> - creates a table in another tab
-<code>class</code> - disaplys the data type</p>
+<p>We’ve read the file into a variable in our environment. What can we
+quickly find out from this data set? There are a handful of commands
+that can help us out. Some personal favorites are:</p>
+<p><code>head</code> - read the first 10 lines from the first 10
+columns</p>
+<p><code>summary</code> - does simple mathematical calculations on your
+data set</p>
+<p><code>str</code> - displays 10 values from each column, with their
+data type</p>
+<p><code>View</code> - creates a table in another tab</p>
+<p><code>class</code> - disaplys the data type</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#head(acacia)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">)</span></span>
@@ -136,12 +139,13 @@ oddities in our data set.</p>
 <p>For example, <em>Why is height a character vector?</em> This can be
 an issue for some of the mathematical calculations.</p>
 <p>Let’s try and find where the issue lies.</p>
-<p>For Data Frames, we sort by Column, Then Row By using
-<code>df[Column,Row]</code>, where <code>df</code> refers to the name of
-your data frame.</p>
+<p>For Data Frames, we sort by <code>Column</code>, then
+<code>Row</code> By using <code>df[Column,Row]</code>, where
+<code>df</code> refers to the name of your data frame.</p>
 <p>If you run <code>df[,X]</code>, you will get the full list of values
 from a Column.</p>
-<p>We can also use <code>$</code> as to sort through columns.</p>
+<p>We can also use <code>$</code> as a <code>string index</code> to sort
+through columns.</p>
 <p>Since we know that some aspect of <code>HEIGHT</code> is leading to
 this column being a <code>chr</code> type, let’s look at the full column
 to see where the issue lies.</p>

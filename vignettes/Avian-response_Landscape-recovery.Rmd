@@ -1,0 +1,171 @@
+---
+title: "Avian Response to Recovering Landscapes"
+author: "James Waterford"
+date: "2023-04-05"
+output: html_document
+---
+
+Avian functional responses to landscape recovery
+---
+Citation: Ikin, Karen et al. (2019), Data from: Avian functional responses to landscape recovery, Dryad, Dataset, https://doi.org/10.5061/dryad.d6k0804
+
+This data set has been retrieved from the DRYAD public domain, and released by Charles Darwin University, McGill University, and James Cook University.
+
+The aim of this database was to measure the effect of restoring vegetation across **17** sites in Australia.
+This data set also includes the ecological traits of these birds, and the attributes of the restored sites.
+
+
+
+Background
+---
+
+After searching DRYAD for an explanation of the dataset, I found a supplementary material on the published article in the Journal of *Royal Society Publishing*.
+
+<!-- Add this link in the https://royalsocietypublishing.org/doi/suppl/10.1098/rspb.2019.0114 -->
+
+```{r setup}
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(ggmap)
+```
+These first two data files were imported directly from DRYAD. 
+```{r import}
+
+BirdData_full <- read.delim("../data-raw/Ikin_2019_BirdData.txt")
+SiteData_full <- read.delim("../data-raw/Ikin_2019_SiteData.txt")
+
+head(colnames(BirdData_full))
+```
+The files from DRYAD have abbreviated the species names, so I combined them with the supplemental material to recreate the table.
+```{r}
+species <- read.csv("../data-raw/SPECIES-GENUS.csv")
+new_names <- c("id")
+append(x = new_names,species$Species,1) -> new_names
+colnames(BirdData_full) <- c(new_names)
+
+BirdSite_Data <- full_join(BirdData_full, SiteData_full, by ="id")
+apply(X = BirdSite_Data[2:122], MARGIN = 2, sum) -> small_table
+```
+
+The *column names* for the bird data reference different species that are local to Australia.
+
+The **IDs** reference multiple measurements at multiple sites.
+
+The `SiteData.txt` has all the information on the various sites, including their geographic location.
+
+```{r}
+# BirdSite_Data <- full_join(BirdData_full, SiteData_full, by ="id")
+head(BirdSite_Data[122:130])
+colnames(SiteData_full)
+```
+Below is a heatmap of the sites that were measured.
+```{r ggmap}
+library(ggmap)
+library(RColorBrewer)
+map_bounds <- c(left = 135, bottom = -39, right = 155, top = -18)
+coords.map <- get_stamenmap(map_bounds, zoom = 5, maptype = "toner-lite")
+coords.map <- ggmap(coords.map, extent="device", legend="none")
+coords.map <- coords.map + stat_density2d(data=SiteData_full,  aes(x=long, y=lat, fill=..level.., alpha=..level..), geom="polygon")
+coords.map <- coords.map +   scale_fill_gradientn(colours=rev(brewer.pal(7, "Spectral")))
+coords.map
+```
+
+The sites are in the southern region of New South Wales, a state that is currently deforesting portions of the **Nagmadi National Forest** in Canberra.
+
+While this dataset only is considering the family of birds in NSW, it is relevant to see how deforesting can affect native species populations.
+```{r ggmap2}
+map_bounds <- c(left = 145, bottom = -36.5, right = 150, top = -34.5)
+coords.map <- get_stamenmap(map_bounds, zoom = 10, maptype = "toner-lite")
+coords.map <- ggmap(coords.map, extent="device", legend="none")
+coords.map <- coords.map + stat_density2d(data=SiteData_full,  aes(x=long, y=lat, fill=..level.., alpha=..level..), geom="polygon")
+coords.map <- coords.map +   scale_fill_gradientn(colours=rev(brewer.pal(7, "Spectral")))
+coords.map
+```
+
+The `SiteData.txt` file also includes background on the physical state of the farm (Planting / Regrowing / No Growth), as well as the tree coverage.
+
+Both of these are important vectors to consider the effect on the species.
+
+<!-- Explanation of how we got to big table, and how this apply function works. -->
+
+
+Initial Explanation of Variables
+---
+
+```{r ggplot2}
+BirdSite_Data %>% 
+  filter(ln_cover != 0) -> BirdSite_Data
+
+
+ggplot(data=BirdSite_Data, mapping = aes(x = farm, y = site.rich, color = growth)) +
+  geom_point(size = 2.25) +
+  geom_smooth(method = lm) +
+  xlab(label = "Active Sites in New South Wales") +
+  ylab(label = "Total Count per Visit") 
+
+
+ggplot(data=BirdSite_Data, mapping = aes(x = ln_cover, y = site.rich, color = growth)) +
+  geom_point() +
+  geom_smooth(method = loess) +
+  xlab(label = "Ln of tree coverage per site") +
+  ylab(label = "Total ount per Visit")
+```
+
+
+
+
+
+Taxonomic Analysis & OpenTree Taxonomy
+-------------------
+
+<!-- Describe why we are using Opentree -->
+
+
+To get a better look at the different species, let's see calculate how they perform at different farms over the multiple treatment groups and/or time intervals.
+
+The author had included a supplementary data table at: https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659
+
+
+
+
+```{r OpenTree_load}
+library(ggtree)
+library(ape)
+library(rotl)
+```
+
+Let's reduce species by the number found across the given sites.
+
+I will generate a plot that represents the most abundant species of birds across these sites.
+
+```{r}
+small_table <- data.frame((small_table))
+
+colnames(small_table)[1] <- "Count"
+small_table$Species <- c(species$Species[1:121])
+small_table %>% 
+  filter(Count >= 150) -> smaller_table
+
+
+## Colnames[0] does not exist. There is no column to read by if I cannot grab this column. Revisit your named integer data frame. 
+
+left_join(smaller_table,species, by = "Species") -> bird_list
+
+
+bird_taxa <- tnrs_match_names(bird_list$Scientific.name)
+
+bird_taxa %>% 
+  filter(flags == "sibling_higher") -> newlist
+newlist
+
+
+bird_tr <- tol_induced_subtree(ott_ids = bird_taxa$ott_id)
+
+plot(bird_tr)
+
+
+```
+
+
+
