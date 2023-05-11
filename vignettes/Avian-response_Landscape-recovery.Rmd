@@ -23,13 +23,17 @@ After searching DRYAD for an explanation of the dataset, I found a supplementary
 
 <!-- Add this link in the https://royalsocietypublishing.org/doi/suppl/10.1098/rspb.2019.0114 -->
 
-```{r setup}
+```{r setup, echo=FALSE, message=FALSE}
 library(dplyr)
 library(stringr)
 library(ggplot2)
 library(ggmap)
 ```
+
+
 These first two data files were imported directly from DRYAD. 
+
+
 ```{r import}
 
 BirdData_full <- read.delim("../data-raw/Ikin_2019_BirdData.txt")
@@ -37,7 +41,11 @@ SiteData_full <- read.delim("../data-raw/Ikin_2019_SiteData.txt")
 
 head(colnames(BirdData_full))
 ```
+
+
 The files from DRYAD have abbreviated the species names, so I combined them with the supplemental material to recreate the table.
+
+
 ```{r}
 species <- read.csv("../data-raw/SPECIES-GENUS.csv")
 new_names <- c("id")
@@ -57,10 +65,11 @@ The `SiteData.txt` has all the information on the various sites, including their
 ```{r}
 # BirdSite_Data <- full_join(BirdData_full, SiteData_full, by ="id")
 head(BirdSite_Data[122:130])
-colnames(SiteData_full)
 ```
+Across New South Wales
+---
 Below is a heatmap of the sites that were measured.
-```{r ggmap}
+```{r ggmap, echo=FALSE, warning=FALSE,message=FALSE}
 library(ggmap)
 library(RColorBrewer)
 map_bounds <- c(left = 135, bottom = -39, right = 155, top = -18)
@@ -74,9 +83,9 @@ coords.map
 The sites are in the southern region of New South Wales, a state that is currently deforesting portions of the **Nagmadi National Forest** in Canberra.
 
 While this dataset only is considering the family of birds in NSW, it is relevant to see how deforesting can affect native species populations.
-```{r ggmap2}
+```{r ggmap2, echo=FALSE, warning=FALSE,message=FALSE}
 map_bounds <- c(left = 145, bottom = -36.5, right = 150, top = -34.5)
-coords.map <- get_stamenmap(map_bounds, zoom = 10, maptype = "toner-lite")
+coords.map <- get_stamenmap(map_bounds, zoom = 8, maptype = "toner-lite")
 coords.map <- ggmap(coords.map, extent="device", legend="none")
 coords.map <- coords.map + stat_density2d(data=SiteData_full,  aes(x=long, y=lat, fill=..level.., alpha=..level..), geom="polygon")
 coords.map <- coords.map +   scale_fill_gradientn(colours=rev(brewer.pal(7, "Spectral")))
@@ -102,14 +111,14 @@ ggplot(data=BirdSite_Data, mapping = aes(x = farm, y = site.rich, color = growth
   geom_point(size = 2.25) +
   geom_smooth(method = lm) +
   xlab(label = "Active Sites in New South Wales") +
-  ylab(label = "Total Count per Visit") 
+  ylab(label = "Total count per Visit") 
 
 
 ggplot(data=BirdSite_Data, mapping = aes(x = ln_cover, y = site.rich, color = growth)) +
   geom_point() +
   geom_smooth(method = loess) +
   xlab(label = "Ln of tree coverage per site") +
-  ylab(label = "Total ount per Visit")
+  ylab(label = "Total count per visit")
 ```
 
 
@@ -122,11 +131,7 @@ Taxonomic Analysis & OpenTree Taxonomy
 <!-- Describe why we are using Opentree -->
 
 
-To get a better look at the different species, let's see calculate how they perform at different farms over the multiple treatment groups and/or time intervals.
-
-The author had included a supplementary data table at: https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659
-
-
+The author had included a supplementary data table with their original [article](https://rs.figshare.com/articles/journal_contribution/ALL_FILES_IN_ONE_PDF_-_Table_S1_Bird_species_and_assigned_guilds_Table_S2_Model_selection_functional_and_taxonomic_richness_landscape_recovery_Table_S3_Model_selection_functional_richness_taxonomic_richness_Table_S4_Model_summaries_functional_and_taxonomi/7937501?backTo=/collections/Supplementary_material_from_Avian_functional_responses_to_landscape_recovery_/4455659).
 
 
 ```{r OpenTree_load}

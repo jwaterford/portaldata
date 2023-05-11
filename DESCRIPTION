@@ -1,6 +1,6 @@
-Package: portalData
+Package: JWtaxonTree
 Type: Package
-Title: Portal Data | Portal Project
+Title: JW Taxon Analysis | Portal Project
 Version: 0.1.0
 Authors@R: person("James J.", "Waterford", email = "ford.water.james@gmail.com", role = c("aut","cre"))
 Maintainer: James Waterford <ford.water.james@gmail.com>
